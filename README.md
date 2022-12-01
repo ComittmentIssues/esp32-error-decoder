@@ -25,8 +25,14 @@ Below is short explanation of remaining files in the project folder.
 
 ```
 ├── CMakeLists.txt
+├── transmission              This is the verification script
+|   └── mqtt_transmit.py
 ├── main
 │   ├── CMakeLists.txt
+|   ├── mqtt.h
+|   ├── mqtt.c
+|   ├── wifi.h
+|   ├── wifi.c
 │   └── main.c
 └── README.md                  This is the file you are currently reading
 ```
