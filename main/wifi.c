@@ -3,6 +3,16 @@
 #include "wifi.h"
 
 /* Function Prototypes */
+
+/**
+ * @brief Wifi event handler loop
+ * @param[in] handler_args Loop arguments
+ * @param[in] base event base
+ * @param[in] event_id event id
+ * @param[in] event_data event data
+ * 
+ * @return None
+*/
 static void wifi_event_handler(void* arg, 
                                esp_event_base_t event_base, 
                                int32_t event_id, 
@@ -67,8 +77,12 @@ static void wifi_event_handler(void* arg,
             break;
         
         case IP_EVENT_STA_GOT_IP:
-            printf("got IP\n");
+        {
+            esp_netif_ip_info_t ip_info;
+            esp_netif_get_ip_info(IP_EVENT_STA_GOT_IP,&ip_info);
+            printf("IP address:" IPSTR "\n", IP2STR(&ip_info.ip));
             break;
+        }
         default:
             printf("Unhandled event_id %d\n", event_id);
             break;

@@ -1,18 +1,40 @@
+/**
+ * @file mqtt.c
+*/
 
+/* Includes */
 #include "mqtt.h"
 #include "assert.h"
+
 /* Private Defines */
-#define KEYS_MAX 128
+
+/**
+ * @brief Max length of a JSON string in number of charachters
+*/
 #define JSON_LENGTH 2048
 
 /* Private Variables */
+
+/**
+ * @brief mqtt topic esp subscribes to in order to get JSON payload.
+*/
 const char * topic = "blink";
+
 /**
  * @brief holds mqtt message handle instance to transfer data between threads.
  */
 static mqtt_MessageHandle_t* CommsSlot;
 
 /* Private Function Prototypes */
+/**
+ * @brief MQTT event handler loop
+ * @param[in] handler_args Loop arguments
+ * @param[in] base event base
+ * @param[in] event_id event id
+ * @param[in] event_data event data
+ * 
+ * @return None
+*/
 static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data);
 
 /* Module Functions*/
@@ -46,7 +68,7 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
             /* code */
             break;
         case MQTT_EVENT_SUBSCRIBED:
-            printf("Subscribed to Event %.*s\n",event->topic_len, event->topic);
+           
             break;
         case MQTT_EVENT_DATA:
         {

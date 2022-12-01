@@ -14,8 +14,9 @@ from random import randint
 
 mqtt_broker = "mqtt.eclipseprojects.io"
 topic = "blink"
+packet_no = 0
+esp_dict = {"error":0, "ignore": "randstring","count": packet_no}
 
-esp_dict = {"error":0, "ignore": "randstring"}
 def main():
     client = mqtt.Client("Error Module")
     client.connect(mqtt_broker)
@@ -29,7 +30,9 @@ def main():
         json_str = json.dumps(esp_dict)
         print(json_str)
         client.publish(topic, json_str.replace(" ",""))
-        time.sleep(1)
+
+        esp_dict["count"] += 1
+        time.sleep(0.5)
 
 
 if __name__ == '__main__':

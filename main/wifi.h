@@ -1,4 +1,5 @@
-/*
+/**
+ * @file wifi.h
  * Wifi Module for ESP32
  */
 
@@ -11,8 +12,15 @@
 #include "esp_event.h"
 #include "esp_wifi_types.h"
 
-#define WIFI_SSID       "Optus_43801A"
-#define WIFI_PASSWORD   "yukesskeetKAXzh"
+/**
+ * @brief SSID of desired network
+*/
+#define WIFI_SSID       "XXXXX"
+
+/**
+ * @brief network password
+ */
+#define WIFI_PASSWORD   "XXXXX"
 
 /**
  * @brief Setup ESP32 wifi module in station mode
