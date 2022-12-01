@@ -13,11 +13,13 @@
 #define BLINK_GPIO 5
 #define JSMN_TOKENS 128
 #define ERROR_CODE_MAX ((uint8_t)0xF)
+
 /* Typedefs */
 typedef enum Comms_StatusEnum {
     COMMS_OK = 0,
     COMMS_ERROR
 } Comms_Status_t;
+
 /* Task Handles */
 TaskHandle_t blinkTaskHandle = NULL;
 TaskHandle_t testTaskHandle = NULL;
@@ -25,7 +27,7 @@ TaskHandle_t commsTaskHandle = NULL;
 
 /* Global Variables */
 static uint8_t error_code = 0;
-
+const char * mqttBrokerUrl = "mqtt://mqtt.eclipseprojects.io";
 mqtt_MessageHandle_t payloadHandle;
 
 /* Function Prototypes */
@@ -139,9 +141,6 @@ void Test_Task(void* args)
 */
 static int jsoneq(const char *json, jsmntok_t *tok, const char *s) 
 {
-
-    printf("%.*s %d\n", tok->end - tok->start,json + tok->start, tok->type);
-
   if ((int)strlen(s) == tok->end - tok->start && strncmp(json + tok->start, s, tok->end - tok->start) == 0) 
     {
         return 0;
@@ -188,6 +187,7 @@ void update_errorCode(uint8_t value)
 
     error_code = value & 0xF;
 }
+
 /* Comms Service Task */
 void Comms_Task (void* args)
 {
@@ -203,7 +203,7 @@ void Comms_Task (void* args)
     vTaskDelay(2000/portTICK_PERIOD_MS);
 
     printf("Initialising MQTT Message Service.");
-    mqtt_init("mqtt://mqtt.eclipseprojects.io", &payloadHandle);
+    mqtt_init(mqttBrokerUrl, &payloadHandle);
     printf("Intiialisng JSMN Parser. \n");
 
     while(1)
